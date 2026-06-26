@@ -80,9 +80,16 @@ async def main():
     team = RoundRobinGroupChat([researcher, fact_checker, writer, reviewer], max_turns=10)
 
     print("### Starting the Agentic Loop... ###")
-    # We use the Console UI to watch the a-ha moments in real time
-    await Console(team.run_stream(task="Find the current AI market size, project it for 5 years, verify it against the internal doc, and create a catchy headline."))
 
+    # First: See it happen in real-time
+    await Console(team.run_stream(task="Find the current AI market size..."))
+
+    # Second: Run it one last time (silently) to get the result object for the file
+    final_result = await team.run(task="Find the current AI market size...")
+    
+    clean_output = final_result.messages[-1].content
+    with open("ai_report_v3.md", "w", encoding="utf-8") as f:
+        f.write(clean_output)
 if __name__ == "__main__":
     # Create a dummy doc for the FactChecker to read
     with open("market_data.txt", "w") as f:
