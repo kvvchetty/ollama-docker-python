@@ -1,0 +1,4 @@
+add manager to decide who speak next based on context
+stop the loop immediate once the reviewer APPROVED
+integrate real API key to fetch market data
+make the researcher corrects the data before writer starts incases where the fact-checker finds a mismatch
